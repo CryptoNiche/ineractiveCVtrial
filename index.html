@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Interactive CV</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -15,25 +15,29 @@
       font-family: Arial, sans-serif;
     }
 
+    /* Canvas fills screen and receives ALL mouse events */
     canvas {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
+      width: 100% !important;
+      height: 100% !important;
       z-index: 0;
+      display: block;
     }
 
+    /* CV sits on top but NEVER blocks mouse from reaching canvas */
     .cv-wrapper {
       position: fixed;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 1;
-      overflow-y: auto;
+      pointer-events: none;
       padding: 20px;
     }
 
@@ -41,11 +45,11 @@
       pointer-events: none;
       max-width: 720px;
       width: 100%;
-      background: rgba(0, 0, 0, 0.55);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 16px;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       padding: 45px 55px;
       color: white;
     }
@@ -69,12 +73,12 @@
     }
 
     .cv-section h2 {
-      font-size: 0.8em;
+      font-size: 0.78em;
       text-transform: uppercase;
       letter-spacing: 2px;
-      color: #888;
+      color: #777;
       margin-bottom: 8px;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
       padding-bottom: 5px;
     }
 
@@ -95,12 +99,12 @@
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-top: 4px;
+      margin-top: 6px;
     }
 
     .cv-tag {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.13);
       border-radius: 20px;
       padding: 4px 14px;
       font-size: 0.85em;
@@ -110,10 +114,10 @@
 </head>
 <body>
 
-<!-- Fluid simulation canvas -->
+<!-- Fluid canvas — must be direct child of body, no wrapper -->
 <canvas id="fluid"></canvas>
 
-<!-- CV Card -->
+<!-- CV card — pointer-events none so mouse always hits canvas -->
 <div class="cv-wrapper">
   <div class="cv-content">
 
@@ -149,42 +153,56 @@
 
     <div class="cv-section">
       <h2>Experience</h2>
-      <p><strong style="color:white">Job Title — Company Name</strong><br>
-      Year – Present<br>
-      Describe what you did, what you built, and what impact it had.</p>
+      <p>
+        <strong style="color:white">Job Title — Company Name</strong><br>
+        Year – Present<br>
+        Describe what you did, what you built, and what impact it had.
+      </p>
     </div>
 
     <div class="cv-section">
       <h2>Education</h2>
-      <p><strong style="color:white">Bachelor's in Computer Science</strong><br>
-      University Name · Graduation Year</p>
+      <p>
+        <strong style="color:white">Bachelor's in Computer Science</strong><br>
+        University Name · Graduation Year
+      </p>
     </div>
 
   </div>
 </div>
 
-<!-- WebGL Fluid via CDN (MIT licence) -->
 <script src="https://cdn.jsdelivr.net/npm/webgl-fluid@0.3"></script>
 <script>
-  WebGLFluid(document.getElementById('fluid'), {
-    IMMEDIATE: true,
-    AUTO: true,
-    INTERVAL: 2000,
-    TRIGGER: 'hover',
-    SIM_RESOLUTION: 128,
-    DYE_RESOLUTION: 1024,
-    DENSITY_DISSIPATION: 3,
-    VELOCITY_DISSIPATION: 0.98,
-    PRESSURE: 0.8,
-    CURL: 30,
-    SPLAT_RADIUS: 0.25,
-    SPLAT_FORCE: 6000,
-    SHADING: true,
-    COLORFUL: true,
-    COLOR_UPDATE_SPEED: 10,
-    BLOOM: true,
-    BLOOM_INTENSITY: 0.8,
-    SUNRAYS: true,
+  const canvas = document.getElementById('fluid');
+
+  WebGLFluid(canvas, {
+    IMMEDIATE:            true,
+    AUTO:                 true,
+    INTERVAL:             2500,
+    TRIGGER:              'hover',       // follows mouse movement
+    SIM_RESOLUTION:       128,
+    DYE_RESOLUTION:       1024,
+    DENSITY_DISSIPATION:  2.5,
+    VELOCITY_DISSIPATION: 0.2,           // low = fluid stays longer
+    PRESSURE:             0.8,
+    PRESSURE_ITERATIONS:  20,
+    CURL:                 30,
+    SPLAT_RADIUS:         0.22,
+    SPLAT_FORCE:          6000,
+    SHADING:              true,
+    COLORFUL:             true,
+    COLOR_UPDATE_SPEED:   10,
+    BLOOM:                true,
+    BLOOM_ITERATIONS:     8,
+    BLOOM_RESOLUTION:     256,
+    BLOOM_INTENSITY:      0.8,
+    BLOOM_THRESHOLD:      0.6,
+    BLOOM_SOFT_KNEE:      0.7,
+    SUNRAYS:              true,
+    SUNRAYS_WEIGHT:       1.0,
+    SUNRAYS_RESOLUTION:   196,
+    BACK_COLOR:           { r: 0, g: 0, b: 0 },
+    TRANSPARENT:          false,
   });
 </script>
 
