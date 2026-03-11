@@ -2,209 +2,99 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Interactive CV</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
     body, html {
+      margin: 0;
+      padding: 0;
       width: 100%;
       height: 100%;
-      overflow: hidden;
-      background: #000;
       font-family: Arial, sans-serif;
+      color: white;
+      background: #1e1e2f;
+      overflow: hidden;
     }
-
-    /* Canvas fills screen and receives ALL mouse events */
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100% !important;
-      height: 100% !important;
-      z-index: 0;
-      display: block;
-    }
-
-    /* CV sits on top but NEVER blocks mouse from reaching canvas */
-    .cv-wrapper {
+    #tsparticles {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      z-index: 0;
+    }
+    .cv-content {
+      position: relative;
       z-index: 1;
       pointer-events: none;
-      padding: 20px;
+      padding: 50px;
+      max-width: 800px;
+      margin: auto;
+      background: rgba(0,0,0,0.5);
+      border-radius: 10px;
     }
-
-    .cv-content {
-      pointer-events: none;
-      max-width: 720px;
-      width: 100%;
-      background: rgba(0, 0, 0, 0.45);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 16px;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      padding: 45px 55px;
-      color: white;
-    }
-
-    .cv-name {
-      font-size: 2.4em;
-      font-weight: bold;
-      color: #ffffff;
-      margin-bottom: 4px;
-    }
-
-    .cv-title {
-      font-size: 1.1em;
-      color: #aaaaaa;
-      margin-bottom: 25px;
-      letter-spacing: 1px;
-    }
-
-    .cv-section {
-      margin-bottom: 22px;
-    }
-
-    .cv-section h2 {
-      font-size: 0.78em;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: #777;
-      margin-bottom: 8px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      padding-bottom: 5px;
-    }
-
-    .cv-section p {
-      font-size: 0.95em;
-      color: #dddddd;
-      line-height: 1.7;
-    }
-
-    .cv-contact-links a {
-      color: #88ccff;
-      text-decoration: none;
-      margin-right: 20px;
-      font-size: 0.95em;
-    }
-
-    .cv-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 6px;
-    }
-
-    .cv-tag {
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.13);
-      border-radius: 20px;
-      padding: 4px 14px;
-      font-size: 0.85em;
-      color: #cccccc;
+    h1, h2, p {
+      margin: 0 0 15px 0;
     }
   </style>
 </head>
 <body>
 
-<!-- Fluid canvas — must be direct child of body, no wrapper -->
-<canvas id="fluid"></canvas>
+<div id="tsparticles"></div>
 
-<!-- CV card — pointer-events none so mouse always hits canvas -->
-<div class="cv-wrapper">
-  <div class="cv-content">
-
-    <div class="cv-name">Your Name</div>
-    <div class="cv-title">Frontend Developer</div>
-
-    <div class="cv-section">
-      <h2>Contact</h2>
-      <div class="cv-contact-links">
-        <a href="#">linkedin.com/in/yourname</a>
-        <a href="#">github.com/CryptoNiche</a>
-        <a href="#">yourjobhunting@gmail.com</a>
-      </div>
-    </div>
-
-    <div class="cv-section">
-      <h2>About</h2>
-      <p>Write a short summary about yourself here. What you do, what you're passionate about, and what you're looking for.</p>
-    </div>
-
-    <div class="cv-section">
-      <h2>Skills</h2>
-      <div class="cv-tags">
-        <span class="cv-tag">HTML</span>
-        <span class="cv-tag">CSS</span>
-        <span class="cv-tag">JavaScript</span>
-        <span class="cv-tag">React</span>
-        <span class="cv-tag">Three.js</span>
-        <span class="cv-tag">WebGL</span>
-        <span class="cv-tag">Node.js</span>
-      </div>
-    </div>
-
-    <div class="cv-section">
-      <h2>Experience</h2>
-      <p>
-        <strong style="color:white">Job Title — Company Name</strong><br>
-        Year – Present<br>
-        Describe what you did, what you built, and what impact it had.
-      </p>
-    </div>
-
-    <div class="cv-section">
-      <h2>Education</h2>
-      <p>
-        <strong style="color:white">Bachelor's in Computer Science</strong><br>
-        University Name · Graduation Year
-      </p>
-    </div>
-
-  </div>
+<div class="cv-content">
+  <h1>Your Name</h1>
+  <h2>Frontend Developer</h2>
+  <p>Email: youremail@example.com</p>
+  <p>Phone: +123456789</p>
+  <h2>Skills</h2>
+  <p>HTML, CSS, JavaScript, React, WebGL</p>
+  <h2>Experience</h2>
+  <p>Worked on interactive web apps and particle-based UI designs.</p>
+  <h2>Education</h2>
+  <p>Bachelor's in Computer Science</p>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/webgl-fluid@0.3"></script>
+<script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
 <script>
-  const canvas = document.getElementById('fluid');
-
-  WebGLFluid(canvas, {
-    IMMEDIATE:            true,
-    AUTO:                 true,
-    INTERVAL:             2500,
-    TRIGGER:              'hover',       // follows mouse movement
-    SIM_RESOLUTION:       128,
-    DYE_RESOLUTION:       1024,
-    DENSITY_DISSIPATION:  2.5,
-    VELOCITY_DISSIPATION: 0.2,           // low = fluid stays longer
-    PRESSURE:             0.8,
-    PRESSURE_ITERATIONS:  20,
-    CURL:                 30,
-    SPLAT_RADIUS:         0.22,
-    SPLAT_FORCE:          6000,
-    SHADING:              true,
-    COLORFUL:             true,
-    COLOR_UPDATE_SPEED:   10,
-    BLOOM:                true,
-    BLOOM_ITERATIONS:     8,
-    BLOOM_RESOLUTION:     256,
-    BLOOM_INTENSITY:      0.8,
-    BLOOM_THRESHOLD:      0.6,
-    BLOOM_SOFT_KNEE:      0.7,
-    SUNRAYS:              true,
-    SUNRAYS_WEIGHT:       1.0,
-    SUNRAYS_RESOLUTION:   196,
-    BACK_COLOR:           { r: 0, g: 0, b: 0 },
-    TRANSPARENT:          false,
+  tsParticles.load("tsparticles", {
+    fpsLimit: 60,
+    particles: {
+      number: {
+        value: 80,
+        density: { enable: true, area: 800 }
+      },
+      color: { value: "#ffffff" },
+      shape: { type: "circle" },
+      opacity: { value: 0.5 },
+      size: { value: { min: 1, max: 5 } },
+      move: {
+        enable: true,
+        speed: 2,
+        direction: "none",
+        outModes: { default: "bounce" }
+      },
+      links: {
+        enable: true,
+        distance: 120,
+        color: "#ffffff",
+        opacity: 0.3,
+        width: 1
+      }
+    },
+    interactivity: {
+      detectsOn: "window",
+      events: {
+        onHover: { enable: true, mode: "repulse" },
+        onClick: { enable: true, mode: "push" }
+      },
+      modes: {
+        repulse: { distance: 100 },
+        push: { quantity: 4 }
+      }
+    },
+    detectRetina: true,
+    background: { color: "#1e1e2f" }
   });
 </script>
-
 </body>
 </html>
