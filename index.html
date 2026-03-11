@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>My Interactive CV</title>
   <style>
-    /* Fullscreen canvas background */
     body, html {
       margin: 0;
       padding: 0;
@@ -15,25 +14,24 @@
       background: #1e1e2f;
       overflow: hidden;
     }
-
     #tsparticles {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: -1; /* behind content */
+      z-index: 0;
     }
-
     .cv-content {
       position: relative;
+      z-index: 1;
+      pointer-events: none;
       padding: 50px;
       max-width: 800px;
       margin: auto;
-      background: rgba(0,0,0,0.5); /* semi-transparent overlay */
+      background: rgba(0,0,0,0.5);
       border-radius: 10px;
     }
-
     h1, h2, p {
       margin: 0 0 15px 0;
     }
@@ -41,7 +39,6 @@
 </head>
 <body>
 
-<!-- Particles background -->
 <div id="tsparticles"></div>
 
 <div class="cv-content">
@@ -49,18 +46,14 @@
   <h2>Frontend Developer</h2>
   <p>Email: youremail@example.com</p>
   <p>Phone: +123456789</p>
-
   <h2>Skills</h2>
   <p>HTML, CSS, JavaScript, React, WebGL</p>
-
   <h2>Experience</h2>
   <p>Worked on interactive web apps and particle-based UI designs.</p>
-
   <h2>Education</h2>
-  <p>Bachelor’s in Computer Science</p>
+  <p>Bachelor's in Computer Science</p>
 </div>
 
-<!-- tsParticles library -->
 <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
 <script>
   tsParticles.load("tsparticles", {
@@ -89,10 +82,10 @@
       }
     },
     interactivity: {
-      detectsOn: "canvas",
+      detectsOn: "window",
       events: {
         onHover: { enable: true, mode: "repulse" },
-        onClick: { enable: true, mode: "push" },
+        onClick: { enable: true, mode: "push" }
       },
       modes: {
         repulse: { distance: 100 },
@@ -103,6 +96,5 @@
     background: { color: "#1e1e2f" }
   });
 </script>
-
 </body>
 </html>
